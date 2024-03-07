@@ -1,5 +1,6 @@
 import socket
 import time
+import struct
 
 # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -11,17 +12,28 @@ addr = ("127.0.0.1", 49002)
 #41.98, -97.30
 #41.44, -115.27
 
-# long,lat,elevation,headingspeed
+def createGDLMsg(msgType, data):
+  header = struct.pack("B", msgType)
+  payload = struct.pack('27s', data.encode('utf-8'))
+
+  gdlMsg = header + payload
+  return gdlMsg
+
 while True:
-  sock.sendto(b'XGPSMSFS,-92.74,41.13,100.0,270,350.0', addr)
+  sock.sendto(createGDLMsg(0xA, "Remaining 27 byte message here"), addr)
   time.sleep(0.25)
-  sock.sendto(b'XGPSMSFS,-97.30,41.98,100.0,265,350.0', addr)
+
+# long, lat, 
+while False:
+  sock.sendto(b'XGPSMSFS,-92.74,41.13,123.1234,270.456,350.0', addr)
   time.sleep(0.25)
-  sock.sendto(b'XGPSMSFS,-115.27,41.44,100.0,275,350.0', addr)
+  sock.sendto(b'XGPSMSFS,-97.30,41.98,132.1234,265.456,350.0', addr)
   time.sleep(0.25)
-  sock.sendto(b'XGPSMSFS,-115.27,41.44,100.0,90,350.0', addr)
+  sock.sendto(b'XGPSMSFS,-115.27,41.44,123.1234,275.456,350.0', addr)
   time.sleep(0.25)
-  sock.sendto(b'XGPSMSFS,-97.30,41.98,100.0,95,350.0', addr)
+  sock.sendto(b'XGPSMSFS,-115.27,41.44,132.1234,90.456,350.0', addr)
   time.sleep(0.25)
-  sock.sendto(b'XGPSMSFS,-92.74,41.13,100.0,85,350.0', addr)
+  sock.sendto(b'XGPSMSFS,-97.30,41.98,133.12340,95.456,350.0', addr)
+  time.sleep(0.25)
+  sock.sendto(b'XGPSMSFS,-92.74,41.13,145.1234,85.456,350.0', addr)
   time.sleep(0.25)
