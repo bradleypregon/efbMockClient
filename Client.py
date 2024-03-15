@@ -19,12 +19,12 @@ def createGDLMsg(msgType, data):
   gdlMsg = header + payload
   return gdlMsg
 
-while True:
-  sock.sendto(createGDLMsg(0xA, "Remaining 27 byte message here"), addr)
-  time.sleep(0.25)
+# while True:
+#   sock.sendto(createGDLMsg(0xA, "Remaining 27 byte message here"), addr)
+#   time.sleep(0.25)
 
 # long, lat, 
-while False:
+while True:
   sock.sendto(b'XGPSMSFS,-92.74,41.13,123.1234,270.456,350.0', addr)
   time.sleep(0.25)
   sock.sendto(b'XGPSMSFS,-97.30,41.98,132.1234,265.456,350.0', addr)
